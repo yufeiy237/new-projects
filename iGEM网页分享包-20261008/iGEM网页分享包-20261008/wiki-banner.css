@@ -1,0 +1,151 @@
+/* Full-width photo heading; the original wiki blue-purple remains the main ink. */
+.wiki-layered-heading {
+  --heading-ink: #3e3a89;
+  --heading-outline: #faffe8;
+  --heading-middle: #bcb9dd;
+  --heading-back: #e4e2f1;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 8px 0 0;
+  padding: 0 14px 8px 0;
+  container-type: inline-size;
+}
+/* Separate the clipping surface from the heading so its outline remains visible. */
+.wiki-layered-heading__display {
+  --banner-radius: clamp(32px, 5vw, 72px);
+  position: relative;
+  isolation: isolate;
+  height: clamp(200px, 23vw, 330px);
+  border-radius: var(--banner-radius);
+  box-shadow: 5px 10px 0 var(--heading-middle), 10px 21px 0 var(--heading-back), 12px 28px 0 var(--heading-outline);
+}
+
+/* Keep the directory out of the opening view; the scroll script toggles this class. */
+@media (min-width: 701px) {
+  .results-page .wiki-sidebar {
+    transform: translateX(-116%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 280ms ease, opacity 220ms ease;
+  }
+
+  .results-page.results-directory-visible .wiki-sidebar {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Increase the reading scale while preserving the existing serif family. */
+.results-page .wiki-section p,
+.results-page .wiki-section li,
+.results-page .wiki-section figcaption {
+  font-size: 1.18rem;
+  line-height: 1.85;
+}
+
+.results-page .wiki-section h2 {
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+}
+
+.results-page .wiki-section h3 {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.results-page .wiki-section-number {
+  font-size: 0.95rem;
+}
+
+/* The directory labels stay slightly larger than the reading text for scanning. */
+.results-page .wiki-sidebar .wiki-toc-link {
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+
+.results-page .wiki-sidebar .wiki-toc-link span:first-child {
+  font-size: 0.86rem;
+}
+
+.results-page .wiki-module-number,
+.results-page .wiki-figure-label {
+  font-size: 0.9rem;
+}
+.wiki-layered-heading__photo {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--heading-ink);
+  border-radius: inherit;
+  background: #e8eef3 url('assets/results-banner.jpg') center 35% / cover no-repeat;
+}
+/* The large left-aligned lettering intersects the bottom frame, like the reference. */
+.wiki-layered-heading .wiki-layered-heading__title {
+  position: absolute;
+  z-index: 2;
+  left: clamp(12px, 2vw, 28px);
+  bottom: 3px;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 0;
+  color: var(--heading-ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(56px, 10vw, 148px);
+  font-size: clamp(48px, 15cqi, 148px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+.wiki-layered-heading__front,
+.wiki-layered-heading__middle,
+.wiki-layered-heading__back {
+  display: block;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 6px var(--heading-outline);
+}
+.wiki-layered-heading__front { position: relative; }
+/* Solid decorative duplicates are excluded from the accessible heading text. */
+.wiki-layered-heading__middle,
+.wiki-layered-heading__back {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.wiki-layered-heading__middle {
+  transform: translate(4px, 7px);
+  color: var(--heading-middle);
+  -webkit-text-stroke-color: var(--heading-middle);
+}
+.wiki-layered-heading__back {
+  transform: translate(8px, 14px);
+  color: var(--heading-back);
+  -webkit-text-stroke-color: var(--heading-back);
+}
+/* The continuous curved bottom and right edge bind photo and lettering together. */
+.wiki-layered-heading__rule {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  box-sizing: border-box;
+  border-right: 10px solid var(--heading-ink);
+  border-bottom: 10px solid var(--heading-ink);
+  border-radius: var(--banner-radius);
+  pointer-events: none;
+}
+.wiki-layered-heading__subtitle {
+  margin: 42px 0 0 clamp(12px, 2vw, 28px);
+  color: var(--heading-ink);
+  font: 500 clamp(15px, 1.6vw, 20px)/1.5 Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.04em;
+}
+.results-page .wiki-frame { row-gap: 24px; }
+@media (max-width: 700px) {
+  .wiki-layered-heading { margin-bottom: 24px; }
+  .wiki-layered-heading__photo { background-position: 62% 35%; }
+  .wiki-layered-heading__front,
+  .wiki-layered-heading__middle,
+  .wiki-layered-heading__back { -webkit-text-stroke-width: 3px; }
+  .wiki-layered-heading__rule { border-width: 6px; }
+}
